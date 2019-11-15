@@ -1,0 +1,85 @@
+{% extends 'nutrition/base.html' %}
+{% block content %}
+  <div id="welcome-div">
+    <h1>Welcome to Macrocosmos!</h1>
+    {% if user.is_authenticated %}
+      <h2>Hi {{ user.username }}! The macronutrient profile of your last 10 meals:</h2>
+      <p>You can register new meals below. If you need more guidance, read the 'About' page!</p>
+    {% else %}
+      <h4>Hi stranger, stay a while and listen. This really should not happen, so I will curse you!</h4>
+    {% endif %}
+  </div>
+    <div id="rec-div">
+      <table class="rec-table">
+        <tr class="rec-th-row">
+          <td class="rec-th">Meal date</td>
+          <td class="rec-th">Protein</td>
+          <td class="rec-th">Fat</td>
+          <td class="rec-th">Carbohydrates</td>
+          <td class="rec-th">Calories</td>
+          <td class="rec-th">Cheat Day?</td>
+          <td class="rec-th">Meal</td>
+          <td class="rec-th">Pic</td>
+          <td class="rec-th">Delete entry</td>
+        </tr>
+        {% load mathfilters %}
+        {% for instance in instances %}
+        <tr>
+          <td class="rec-td">
+            <a href="/meal_display/{{ instance.id }}">
+              {{ instance.date }}
+            </a>
+          </td>
+          <td class="rec-td">{{ instance.protein }}</td>
+          <td class="rec-td">{{ instance.fat }}</td>
+          {% if instance.carbohydrates <= 20 %}
+          <td class="rec-td">{{ instance.carbohydrates }}</td>
+          {% else %}
+          <td class="rec-td-red">{{ instance.carbohydrates }}</td>
+          {% endif %}
+          {% with cp=instance.protein|mul:4 cf=instance.fat|mul:9 cc=instance.carbohydrates|mul:4 %}
+          <td class="rec-td">{{ cp|add:cf|add:cc }}</td>
+          {% endwith %}
+          {% if instance.cheat %}
+          <td class="rec-td">Yes</td>
+          {% else %}
+          <td class="rec-td">No</td>
+          {% endif %}
+          <td class="rec-td">{{ instance.comment }}</td>
+          {% if instance.image %}
+          <td class="rec-td">
+            <a href="/meal_display/{{ instance.id }}">
+              <img src="{{ instance.image.url }}" alt="meal" class="food-img">
+            </a>
+          </td>
+          {% else %}
+          <td class="rec-td"></td>
+          {% endif %}
+          <td class="rec-td"><a href="/delete/{{ instance.id }}" class="delete"><button class="delete-icon">x</button></a></td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td class="rec-avg-index">10 day average</td>
+          <td class="rec-avg-index">{{ protein_avg }}</td>
+          <td class="rec-avg-index">{{ fat_avg }}</td>
+          <td class="rec-avg-index">{{ carb_avg }}</td>
+          <td class="rec-avg-index">{{ cal_avg }}</td>
+          <td class="rec-avg-index">Cheat meals: </td>
+          <td class="rec-avg-index">{{ cheat_total }}</td>
+          <td class="rec-avg-index"></td>
+          <td class="rec-avg-index"></td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <h2>Register a meal</h2>
+      <p>Make sure to know your macros!</p>
+        <div id="meal-form">
+          <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="submit" value="Register meal" />
+          </form>
+        </div>
+    </div>
+    <h3><a href="{% url 'logout' %}">Logout</a></h3>
+{% endblock %}

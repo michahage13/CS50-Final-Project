@@ -1,0 +1,201 @@
+body {
+  text-align: center;
+  font-size: 0.9em;
+  background-color: #003;
+  color: #FFA;
+}
+
+#welcome-div {
+  text-align: center;
+  height: 200px;
+}
+
+h1 {
+  font-size: 2em;
+  width: 100%;
+  padding-top: 50px;
+}
+h2 {
+  font-size: 1.5em;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+h3 {
+  font-size: 1.25em;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+#rec-div {
+  background-color: #336;
+  text-align: center;
+  width: 50%;
+  padding: 0px 20px 0px 20px;
+  display: inline-block;
+  border-radius: 5%;
+}
+
+.rec-table {
+  padding: 0px 5px 0px 5px;
+  display: inline-block;
+}
+
+.red-th-row {
+
+}
+
+.rec-th {
+  padding: 20px 10px 20px 10px;
+}
+
+.rec-td {
+  padding: 10px 10px 10px 10px;
+  border-top: solid #669 1px;
+}
+
+.rec-td-red {
+  padding: 10px 10px 10px 10px;
+  border-top: solid #669 1px;
+  color: #F33;
+}
+
+.rec-avg-index {
+  padding: 20px 10px 20px 10px;
+  font-weight: bold;
+  border-top: solid #669 1px;
+}
+
+.rec-avg {
+  padding: 20px 10px 20px 10px;
+  font-weight: bold;
+  border-bottom: solid #669 1px;
+}
+
+.food-img {
+  height: 65px;
+  width: auto;
+}
+
+.delete-icon {
+  background-color: #C00;
+  color: #FFF;
+  border-color: #FC0;
+  font-weight: bold;
+  height: auto;
+}
+
+.meal-date {
+}
+
+.description {
+  vertical-align: middle;
+}
+
+#meal-form {
+  background-color: #336;
+  width: 50%;
+  display: inline-block;
+  border-radius: 5%;
+}
+@media only screen and (max-width: 1400px) {
+  body {
+    font-size: 0.7em;
+  }
+  #rec-div {
+    width: 90%;
+  }
+  #meal-form {
+    width: 90%;
+  }
+}
+
+form {
+  padding: 20px 0px 20px 0px;
+}
+
+.submit {
+
+}
+
+.search-comment {
+  width: 40%;
+  margin: 20px 0px 20px 0px;
+}
+
+.macrofilter-div {
+  display: inline-flex;
+  align-items: center;
+}
+
+.macrofilter {
+  margin: 10px 10px 10px 10px;
+}
+
+.search-submit {
+  margin-top: 20px;
+}
+
+#meal-display-div-pic {
+
+}
+
+#meal-display-pic {
+  max-height: 400px;
+  width: auto;
+}
+
+#meal-display-text {
+  margin-left: 35%;
+  margin-right: 35%;
+  max-width: 30%;
+  text-align: center;
+}
+
+.back-to-top {
+  margin-top: 20px;
+}
+
+.confirm {
+  margin: 20px 0px 80px 0px;
+  font-size: 1.5em;
+}
+
+.deconfirm {
+  margin: 20px 0px 50px 0px;
+  font-size: 1.5em;
+}
+
+.confirm-button {
+  padding: 5px 10px 5px 10px;
+  background-color: #F00;
+  color: black;
+}
+
+.confirm-button:hover {
+  background-color: #C00;
+}
+
+.deconfirm-button {
+  padding: 5px 10px 5px 10px;
+  background-color: #0C0;
+}
+
+.deconfirm-button:hover {
+  background-color: #090;
+}
+
+#about {
+  width: 50%;
+  text-align: center;
+  display: inline-block;
+  padding-bottom: 50px;
+}
+
+.edit-div {
+  margin: 10px 0px 50px 0px;
+}
+
+.account-edit {
+  margin: 20px 50px 20px 50px;
+}

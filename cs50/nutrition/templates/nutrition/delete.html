@@ -1,0 +1,11 @@
+{% extends 'nutrition/base.html' %}
+{% block content %}
+
+<form action='.' method="POST">{% csrf_token %}
+  <h1>Do you really want to delete this day record? {{ record.id }}</h1>
+  <p>
+    Delete?<input type="submit" value="yes" />
+    <a href="../">Cancel</a>
+  </p>
+</form>
+{% endblock %}

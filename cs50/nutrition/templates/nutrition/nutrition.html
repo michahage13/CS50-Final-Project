@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Nutrition</title>
+  </head>
+  <body>
+    <h1> Day {{ dailynutrition.id }}</h1>
+    <ul>
+      <li>Protein {{ dailynutrition.protein }}</li>
+      <li>Fat {{ dailynutrition.fat }}</li>
+    </ul>
+    <h1><a href="{% url 'logout' %}">Login</a></h1>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+{% extends 'nutrition/base.html' %}
+{% block content %}
+
+  {% for instance in object_list %}
+    <p>
+      {{ instance.id }} | {{ instance.protein }} of protein,
+      {{ instance.fat }} of fat
+      {{ instance.carbohydrates }} of carbs
+      {{ instance.calories }} kcal
+      eaten by {{ instance.username }} on {{ instance.date }}
+      and cheatday = {{ instance.cheat }}
+      <form method="POST">{% csrf_token %}
+        <p>Delete?<input type="submit" value="{{ instance.id }}" /></p>
+      </form>
+    </p>
+  {% endfor %}
+<a href="{% url 'index' %}">
+  <p>
+    Index
+  </p>
+</a>
+{% endblock %}

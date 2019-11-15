@@ -1,0 +1,52 @@
+{% extends 'nutrition/base.html' %}
+{% block content %}
+{% if meal.comment %}
+<h1>
+  {% if meal.cheat %}
+    <b>Cheatmeal</b>
+  {% endif %}
+  {{ meal.comment }} eaten on {{ meal.date }}
+</h1>
+{% else %}
+<h1>Meal eaten on {{ meal.date }}</h1>
+{% endif %}
+<div id="meal-display-div-pic">
+  {% if meal.image %}
+  <img src="{{ meal.image.url }}" alt="meal" id="meal-display-pic">"
+  {% endif %}
+  <div id="rotate-pic">
+    <a href="/rotateleft/{{ meal.id }}">90° left</a>
+    &nbsp;&nbsp;Rotate&nbsp;&nbsp;
+    <a href="/rotateright/{{ meal.id }}">90° right</a>
+  </div>
+</div>
+<div class="rec-div">
+  <table class="rec-table">
+    <tr class="rec-th-row">
+      <td class="rec-th">Protein</td>
+      <td class="rec-th">Fat</td>
+      <td class="rec-th">Carbohydrates</td>
+    </tr>
+    <tr>
+      <td class="rec-th">{{ meal.protein }}</td>
+      <td class="rec-th">{{ meal.fat }}</td>
+      <td class="rec-th">{{ meal.carbohydrates }}</td>
+    </tr>
+  </table>
+  <h2>for a total of
+    {% load mathfilters %}
+    {% with cp=meal.protein|mul:4 cf=meal.fat|mul:9 cc=meal.carbohydrates|mul:4 %}
+    {{ cp|add:cf|add:cc }}
+    {% endwith %}
+    calories
+  </h2>
+  {% if meal.description %}
+    <p id="meal-display-text">
+      {{ meal.description }}
+    </p>
+  {% endif %}
+  <p>
+    <a href="/delete/{{ meal.id }}">Delete this entry</a>
+  </p>
+</div>
+{% endblock %}

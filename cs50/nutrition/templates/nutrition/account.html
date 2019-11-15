@@ -1,0 +1,17 @@
+{% extends 'nutrition/base.html' %}
+{% block content %}
+  <div id="welcome-div">
+    <h1>Manage your Account</h1>
+    {% if user.is_authenticated %}
+      <h2>{{ entries }} meals registered as {{ user.username }}</h2>
+      <p>Registered {{ joinDate }}</p>
+    {% endif %}
+  </div>
+  <div class="edit-div">
+    <a href="/change_pw" class="account-edit">Change Password</a>
+    <a href="/delete_confirm" class="account-edit">Delete User</a>
+  </div>
+  <div>
+    <h3><a href="{% url 'logout' %}">Logout</a></h3>
+  </div>
+{% endblock %}

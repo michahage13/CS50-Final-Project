@@ -1,0 +1,116 @@
+{% extends 'nutrition/base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+  <h2>{{ user.username }}'s Journal</h2>
+  <p>Track and filter all your registered meals.</p>
+{% endif %}
+<div id="search-entry">
+  <form method="GET" action="/search_entry" id="searchform">
+    <div>
+      <input type="search" name="comment" placeholder="Meal comment contains" class="search-comment">
+    </div>
+    <div>
+    <label for="meals-from">from&nbsp;&nbsp;</label>
+    <input type="date" name="mealdate" id="meals-from">
+    <label for="meals-to">&nbsp;&nbsp;to&nbsp;&nbsp;</label>
+    <input type="date" name="mealdateEnd" id="meals-to">
+    </div>
+    <div class="macrofilter-div">
+      Sort by macronutrient:
+      <input type="radio" name="macrofilter" value="protein" class="macrofilter"> Protein<br>
+      <input type="radio" name="macrofilter" value="fat" class="macrofilter"> Fat<br>
+      <input type="radio" name="macrofilter" value="carbohydrate" class="macrofilter"> Carbohydrates<br>
+      <input type="radio" name="macrofilter" value="nosort" class="macrofilter" checked> None<br>
+    </div>
+    <div class="cheatfilter-div">
+      Filter by meal type:
+      <input type="radio" name="cheat" value="all" class="macrofilter" checked>All meals
+      <input type="radio" name="cheat" value="cheat" class="macrofilter">Cheat meals only
+      <input type="radio" name="cheat" value="clean" class="macrofilter" >Clean meals only
+    </div>
+    <input type="submit" value="Apply" class="search-submit">
+  </form>
+</div>
+<div id="rec-div">
+  <table class="rec-table">
+    {% if proteinTOTAL %}
+    <tr>
+      <td class="rec-avg">Period totals</td>
+      <td class="rec-avg">{{ proteinTOTAL }}</td>
+      <td class="rec-avg">{{ fatTOTAL }}</td>
+      <td class="rec-avg">{{ carbTOTAL }}</td>
+      <td class="rec-avg">{{ calTOTAL }}</td>
+      <td class="rec-avg">Meals: </td>
+      <td class="rec-avg">{{ mealsTOTAL }}</td>
+      <td class="rec-avg"></td>
+      <td class="rec-avg"></td>
+    </tr>
+    <tr>
+      <td class="rec-avg">Period averages</td>
+      <td class="rec-avg">{{ proteinAVG }}</td>
+      <td class="rec-avg">{{ fatAVG }}</td>
+      <td class="rec-avg">{{ carbAVG }}</td>
+      <td class="rec-avg">{{ calAVG }}</td>
+      <td class="rec-avg">Cheat meals: </td>
+      <td class="rec-avg">{{ cheatTOTAL }}</td>
+      <td class="rec-avg"></td>
+      <td class="rec-avg"></td>
+    </tr>
+    {% endif %}
+    <tr class="rec-th-row">
+      <td class="rec-th">Meal date</td>
+      <td class="rec-th">Protein</td>
+      <td class="rec-th">Fat</td>
+      <td class="rec-th">Carbohydrates</td>
+      <td class="rec-th">Calories</td>
+      <td class="rec-th">Cheat meal?</td>
+      <td class="rec-th">Meal</td>
+      <td class="rec-th">Pic</td>
+      <td class="rec-th">Delete entry</td>
+    </tr>
+    {% load mathfilters %}
+    {% for instance in instances reversed %}
+    <tr>
+      <td class="rec-td">
+        <a href="/meal_display/{{ instance.id }}">
+          {{ instance.date }}
+        </a>
+      </td>
+      <td class="rec-td">{{ instance.protein }}</td>
+      <td class="rec-td">{{ instance.fat }}</td>
+      {% if instance.carbohydrates <= 20 %}
+      <td class="rec-td">{{ instance.carbohydrates }}</td>
+      {% else %}
+      <td class="rec-td-red">{{ instance.carbohydrates }}</td>
+      {% endif %}
+      {% with cp=instance.protein|mul:4 cf=instance.fat|mul:9 cc=instance.carbohydrates|mul:4 %}
+      <td class="rec-td">{{ cp|add:cf|add:cc }}</td>
+      {% endwith %}
+      {% if instance.cheat %}
+      <td class="rec-td">Yes</td>
+      {% else %}
+      <td class="rec-td">No</td>
+      {% endif %}
+      <td class="rec-td">{{ instance.comment }}</td>
+      {% if instance.image %}
+      <td class="rec-td">
+        <a href="/meal_display/{{ instance.id }}">
+          <img src="{{ instance.image.url }}" alt="meal" class="food-img">
+        </a>
+      </td>
+      {% else %}
+      <td class="rec-td"></td>
+      {% endif %}
+      <td class="rec-td"><a href="/delete/{{ instance.id }}">Delete?</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+<div class="back-to-top">
+  <a href="#searchform">
+    <p>
+      Top
+    </p>
+  </a>
+</div>
+{% endblock %}
